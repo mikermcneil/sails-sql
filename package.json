@@ -5,6 +5,16 @@
   "keywords": ["adapter","sql","mysql","postgresql","sqlite3","oracle","mssql","sql-server","sails.js","sails","waterline"],
   "main": "lib/sails-sql.js",
   "repository": "git@github.com:mikermcneil/sails-sql.git",
+  "driver": {
+    "friendlyName": "SQL",
+    "implements": {
+      "connectable": "1.0",
+      "queryable": "1.0",
+      "transactional": "1.0",
+      "modeled": "1.0",
+      "migratable": "1.0"
+    }
+  },
   "scripts": {
     "custom-tests": "node ./node_modules/mocha/bin/mocha test --recursive",
     "lint": "eslint . --max-warnings=0 --ignore-pattern 'test/' && echo '✔  Your code looks good.'",
@@ -13,6 +23,9 @@
   },
   "author": "Mike McNeil",
   "license": "MIT",
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "@sailshq/lodash": "^3.10.2",
     "flaverr": "^1.5.1",
