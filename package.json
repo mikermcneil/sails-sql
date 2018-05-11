@@ -1,0 +1,31 @@
+{
+  "name": "sails-sql",
+  "version": "1.0.0",
+  "description": "SQL adapter for Sails/Waterline.  Supports MySQL, PostgreSQL, SQL Server (MSSQL), Oracle, & SQLite.",
+  "keywords": ["adapter","sql","mysql","postgresql","sqlite3","oracle","mssql","sql-server","sails.js","sails","waterline"],
+  "main": "lib/sails-sql.js",
+  "repository": "git@github.com:mikermcneil/sails-sql.git",
+  "scripts": {
+    "custom-tests": "node ./node_modules/mocha/bin/mocha test --recursive",
+    "lint": "eslint . --max-warnings=0 --ignore-pattern 'test/' && echo '✔  Your code looks good.'",
+    "bench": "NODE_ENV=production mocha test/*.benchmark.js",
+    "test": "npm run lint && npm run custom-tests"
+  },
+  "author": "Mike McNeil",
+  "license": "MIT",
+  "dependencies": {
+    "@sailshq/lodash": "^3.10.2",
+    "flaverr": "^1.5.1",
+    "knex": "0.14.6",
+    "mssql": "4.1.0",
+    "mysql": "2.15.0",
+    "oracledb": "2.2.0",
+    "pg": "7.4.3",
+    "sqlite3": "4.0.0"
+  },
+  "devDependencies": {
+    "benchmark": "2.1.2",
+    "eslint": "4.19.1",
+    "mocha": "3.0.2"
+  }
+}
