@@ -2,7 +2,19 @@
   "name": "sails-sql",
   "version": "0.0.0",
   "description": "SQL adapter for Sails/Waterline.  Supports MySQL, PostgreSQL, SQL Server (MSSQL), Oracle, & SQLite.",
-  "keywords": ["adapter","sql","mysql","postgresql","sqlite3","oracle","mssql","sql-server","sails.js","sails","waterline"],
+  "keywords": [
+    "adapter",
+    "sql",
+    "mysql",
+    "postgresql",
+    "sqlite3",
+    "oracle",
+    "mssql",
+    "sql-server",
+    "sails.js",
+    "sails",
+    "waterline"
+  ],
   "main": "lib/sails-sql.js",
   "repository": "git@github.com:mikermcneil/sails-sql.git",
   "driver": {
@@ -30,6 +42,7 @@
     "@sailshq/lodash": "^3.10.2",
     "flaverr": "^1.5.1",
     "knex": "0.14.6",
+    "machine": "^15.0.0",
     "mssql": "4.1.0",
     "mysql": "2.15.0",
     "oracledb": "2.2.0",
