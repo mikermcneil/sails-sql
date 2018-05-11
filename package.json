@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@sailshq/lodash": "^3.10.2",
+    "driver-interface": "^1.0.5",
     "flaverr": "^1.5.1",
     "knex": "0.14.6",
     "machine": "^15.0.0",
