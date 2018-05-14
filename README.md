@@ -29,6 +29,15 @@ For now, since we only support a single pool, we simply destroy it.
 For more info, see:
  • https://github.com/felixge/node-mysql/blob/v2.10.2/Readme.md#closing-all-the-connections-in-a-pool
 
+### getConnection() notes
+
+Note that if this driver is adapted to support managers which spawn
+ad-hoc connections or manage multiple pools/replicas using PoolCluster,
+then relevant settings would need to be included in the manager instance
+so that connections can be appropriately fetched/opened here.
+For now, since we only support a single pool, we simply acquire a
+connection from the pool.
+
 ### releaseConnection() notes
 
 Note that if this driver is adapted to support managers which spawn
