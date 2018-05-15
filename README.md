@@ -7,10 +7,13 @@ SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports 
 <a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
 <!-- TODO: plop in the other db logos/links here, for familiarity -->
 
+## Acknowledgements
+
+Thanks to [dougwilson](https://github.com/dougwilson) and [felixge](https://github.com/felixge) for all of their great work on [mysql](http://npmjs.com/package/mysql), [@brianc](https://github.com/brianc) for all of his fantastic work on the [`pg`](http://npmjs.com/package/pg) package, and thousands of contributors across the Node.js community that have made this level of simplicity and abstraction possible.
+
 ## Help
 
 For more examples, or if you get stuck or have questions, click [here](https://sailsjs.com/support).
-
 
 ## Bugs &nbsp; [![NPM version](https://badge.fury.io/js/sails-sql.svg)](http://npmjs.com/package/sails-sql)
 
@@ -23,14 +26,9 @@ Please observe the guidelines and conventions laid out in the [Sails project con
 
 [![NPM](https://nodei.co/npm/sails-sql.png?downloads=true)](http://npmjs.com/package/sails-sql)
 
-## Acknowledgements
-
-- Thanks to [dougwilson](https://github.com/dougwilson) and [felixge](https://github.com/felixge) for all of their great work on [mysql](http://npmjs.com/package/mysql).
-- Thanks to [@brianc](https://github.com/brianc) for all of his fantastic work on the [`pg`](http://npmjs.com/package/pg) package.
-
 ## License
 
-MIT &copy; 2018-present Mike McNeil
+MIT &copy; 2018-present [Mike McNeil](https://twitter.com/mikermcneil)
 
 This package, like the [Sails framework](https://sailsjs.com), is free and open-source under the [MIT License](https://sailsjs.com/license).
 
