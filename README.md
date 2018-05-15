@@ -1,10 +1,44 @@
+# Sails SQL Adapter
+<a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
+
+<!-- TODO: plop in the other db logos/links here, for familiarity -->
+
+SQL adapter for [Node.js/Sails](https://sailsjs.com) and [Waterline](http://waterlinejs.org). Supports MySQL, PostgreSQL, Microsoft SQL Server (MSSQL), SQLite, & Oracle databases.
+
+> This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
 
+## Help
+
+For more examples, or if you get stuck or have questions, click [here](https://sailsjs.com/support).
 
 
+## Bugs &nbsp; [![NPM version](https://badge.fury.io/js/sails-sql.svg)](http://npmjs.com/package/sails-sql)
+
+To report a bug, [click here](https://sailsjs.com/bugs).
 
 
-### MySQL implementation notes
+## Contributing &nbsp; [![Build Status](https://travis-ci.org/sailshq/sails-sql.svg?branch=master)](https://travis-ci.org/sailshq/sails-sql)
+
+Please observe the guidelines and conventions laid out in the [Sails project contribution guide](https://sailsjs.com/contribute) when opening issues or submitting pull requests.
+
+[![NPM](https://nodei.co/npm/sails-sql.png?downloads=true)](http://npmjs.com/package/sails-sql)
+
+## Acknowledgements
+
+- Thanks to [dougwilson](https://github.com/dougwilson) and [felixge](https://github.com/felixge) for all of their great work on [mysql](http://npmjs.com/package/mysql).
+- Thanks to [@brianc](https://github.com/brianc) for all of his fantastic work on the [`pg`](http://npmjs.com/package/pg) package.
+
+## License
+
+MIT &copy; 2018-present Mike McNeil
+
+This package, like the [Sails framework](https://sailsjs.com), is free and open-source under the [MIT License](https://sailsjs.com/license).
+
+
+## Implementor notes (advanced)
+
+### About MySQL
 Support for different types of managers is database-specific, and is not
 built into the Waterline driver spec-- however this type of configurability
 can be instrumented using `meta`.
@@ -26,10 +60,9 @@ manager, and then rounded up and disconnected here.)
 
 For now, since we only support a single pool, we simply destroy it.
 
-For more info, see:
- • https://github.com/felixge/node-mysql/blob/v2.10.2/Readme.md#closing-all-the-connections-in-a-pool
+For more info, see https://github.com/felixge/node-mysql/blob/v2.10.2/Readme.md#closing-all-the-connections-in-a-pool
 
-### getConnection() notes
+### About getConnection()
 
 Note that if this driver is adapted to support managers which spawn
 ad-hoc connections or manage multiple pools/replicas using PoolCluster,
@@ -38,7 +71,7 @@ so that connections can be appropriately fetched/opened here.
 For now, since we only support a single pool, we simply acquire a
 connection from the pool.
 
-### releaseConnection() notes
+### About releaseConnection()
 
 Note that if this driver is adapted to support managers which spawn
 ad-hoc connections or manage multiple pools/replicas using PoolCluster,
