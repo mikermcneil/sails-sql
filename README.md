@@ -1,12 +1,11 @@
 # Sails SQL Adapter
-<a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
-
-<!-- TODO: plop in the other db logos/links here, for familiarity -->
 
 SQL adapter for [Node.js/Sails](https://sailsjs.com) and [Waterline](http://waterlinejs.org). Supports MySQL, PostgreSQL, Microsoft SQL Server (MSSQL), SQLite, & Oracle databases.
 
 > This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
+<a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
+<!-- TODO: plop in the other db logos/links here, for familiarity -->
 
 ## Help
 
