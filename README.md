@@ -4,14 +4,12 @@ SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports 
 
 > This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
-  <a target="_blank" href="https://www.sqlite.org/index.html"><img src="https://www.sqlite.org/images/sqlite370_banner.gif" alt="SQL Lite" title="SQL Lite: SQL Lite adapter for Sails"/></a>
+ 
   <a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
   <a target="_blank" href="https://www.postgresql.org"><img src="https://onioncontainers.com/img/postgres.png" alt="Postgresql Logo" title="sails-postgresql: Postgresql adapter for Sails"/></a>
+   <a target="_blank" href="https://www.sqlite.org/index.html"><img src="https://www.sqlite.org/images/sqlite370_banner.gif" alt="SQL Lite" title="SQL Lite: SQL Lite adapter for Sails"/></a>
   <a target="_blank" href="https://www.microsoft.com/en-US/sql-server/sql-server-2017"><img src="http://www.storegrid.co.za/wp-content/uploads/2012/05/256-SQLServer-a.png" alt="Microsoft SQL Logo" title="sails-Microsoft-SQL: Microsoft-SQL-Server adapter for Sails"/></a>
 
-
-
-<!-- TODO: plop in the other db logos/links here, for familiarity -->
 
 ## Acknowledgements
 
