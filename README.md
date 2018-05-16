@@ -6,7 +6,7 @@ SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports 
 
  
   <a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" title="sails-mysql: MySQL adapter for Sails"/></a>
-  <a target="_blank" href="https://www.postgresql.org"><img src="https://onioncontainers.com/img/postgres.png" alt="Postgresql Logo" title="sails-postgresql: Postgresql adapter for Sails"/></a>
+  <a target="_blank" href="https://www.postgresql.org"><img src="http://sm.pcmag.com/t/pcmag_ru/help/p/postgresql/postgresql-94-funktsii-tekhnologii-vozmozhnosti_3nyj.640.jpg" alt="Postgresql Logo" title="sails-postgresql: Postgresql adapter for Sails"/></a>
    <a target="_blank" href="https://www.sqlite.org/index.html"><img src="https://www.sqlite.org/images/sqlite370_banner.gif" alt="SQL Lite" title="SQL Lite: SQL Lite adapter for Sails"/></a>
   <a target="_blank" href="https://www.microsoft.com/en-US/sql-server/sql-server-2017"><img src="http://www.fuzzylogix.com/wp-content/uploads/microsoft-sql-server-logo.png" alt="Microsoft SQL Logo" title="sails-Microsoft-SQL: Microsoft-SQL-Server adapter for Sails"/></a>
 
