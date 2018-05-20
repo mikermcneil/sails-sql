@@ -3,10 +3,6 @@
 ## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
 ## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
 ## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
-## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
-## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
-## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
-## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
 
 SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports MySQL, PostgreSQL, Microsoft SQL Server (MSSQL), SQLite, & Oracle databases.
 
