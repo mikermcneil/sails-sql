@@ -1,10 +1,18 @@
 # Sails SQL Adapter
 
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting mid-to-late Fall 2018 for stable release)
+
 SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports MySQL, PostgreSQL, Microsoft SQL Server (MSSQL), SQLite, & Oracle databases.
 
 > This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
- 
+
 <a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" width="120px" title="sails-mysql: MySQL adapter for Sails"/></a>
 <a target="_blank" href="https://www.postgresql.org"><img src="http://sm.pcmag.com/t/pcmag_ru/help/p/postgresql/postgresql-94-funktsii-tekhnologii-vozmozhnosti_3nyj.640.jpg" width="140px" alt="Postgresql Logo" title="sails-postgresql: Postgresql adapter for Sails"/></a>
 <a target="_blank" href="https://www.microsoft.com/en-us/sql-server"><img src="https://dirkstrauss.com/wp-content/uploads/2014/01/script-table-data.jpg" width="120px" alt="Microsoft SQL Logo" title="sails-Microsoft-SQL: Microsoft-SQL-Server adapter for Sails"/></a>
