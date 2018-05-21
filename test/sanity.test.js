@@ -48,8 +48,15 @@ describe('sanity', ()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.dropPhysicalModel(db, 'foo');
-      await adapter.ƒ.definePhysicalModel(db, 'foo', []);
-      // await adapter.ƒ.setPhysicalSequence(db, …);  « TODO
+      await adapter.ƒ.definePhysicalModel(db, 'foo', [
+        {
+          columnName: 'id',
+          columnType: 'INT',
+          unique: true,
+          autoIncrement: true,
+        },
+      ]);
+      await adapter.ƒ.setPhysicalSequence(db, 'foo_id_seq', 1000);
       await adapter.ƒ.destroyManager(mgr);
     });
   }//∞
