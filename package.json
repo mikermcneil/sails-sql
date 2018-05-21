@@ -49,7 +49,7 @@
     "oracledb": "2.2.0",
     "pg": "7.4.3",
     "sqlite3": "4.0.0",
-    "waterline-utils": "^1.4.0"
+    "waterline-utils": "^1.4.1"
   },
   "devDependencies": {
     "benchmark": "2.1.2",
