@@ -3,7 +3,6 @@ var adapter = require('../');
 
 
 describe('sanity', ()=>{
-
   var dbTestUrls = [
     'mysql://root@localhost/mppg',
     // 'pg://root@localhost/mppg',
@@ -11,7 +10,6 @@ describe('sanity', ()=>{
     // 'sqlite3://root@localhost/mppg',
     // 'oracledb://root@localhost/mppg',
   ];
-
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
@@ -34,5 +32,20 @@ describe('sanity', ()=>{
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
       await adapter.ƒ.destroyManager(mgr);
     });
+    it('should support transactions', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+
+      var db1 = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.beginTransaction(db1);
+      await adapter.ƒ.sendNativeQuery(db1, 'SELECT * FROM notarealtable').tolerate('queryFailed');
+      await adapter.ƒ.commitTransaction(db1);
+
+      var db2 = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.beginTransaction(db2);
+      await adapter.ƒ.sendNativeQuery(db2, 'SELECT * FROM notarealtable').tolerate('queryFailed');
+      await adapter.ƒ.rollbackTransaction(db2);
+
+      await adapter.ƒ.destroyManager(mgr);
+    });
   }//∞
-});
+});//∂
