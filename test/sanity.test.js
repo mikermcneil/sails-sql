@@ -34,17 +34,22 @@ describe('sanity', ()=>{
     });
     it('should support transactions', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
-
       var db1 = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.beginTransaction(db1);
       await adapter.ƒ.sendNativeQuery(db1, 'SELECT * FROM notarealtable').tolerate('queryFailed');
       await adapter.ƒ.commitTransaction(db1);
-
       var db2 = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.beginTransaction(db2);
       await adapter.ƒ.sendNativeQuery(db2, 'SELECT * FROM notarealtable').tolerate('queryFailed');
       await adapter.ƒ.rollbackTransaction(db2);
-
+      await adapter.ƒ.destroyManager(mgr);
+    });
+    it('should support auto-migrations', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.dropPhysicalModel(db, 'foo');
+      await adapter.ƒ.definePhysicalModel(db, 'foo', []);
+      // await adapter.ƒ.setPhysicalSequence(db, …);  « TODO
       await adapter.ƒ.destroyManager(mgr);
     });
   }//∞
