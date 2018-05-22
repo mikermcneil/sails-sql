@@ -49,12 +49,9 @@ describe('sanity', ()=>{
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.dropPhysicalModel(db, 'foo');
       await adapter.ƒ.definePhysicalModel(db, 'foo', [
-        {
-          columnName: 'id',
-          columnType: 'INT',
-          unique: true,
-          autoIncrement: true,
-        },
+        { columnName: 'id', columnType: 'DOESNT_MATTER', unique: true, autoIncrement: true },
+        { columnName: 'beep', columnType: '_number', unique: true },
+        { columnName: 'boop', columnType: '_string' },
       ]);
       await adapter.ƒ.setPhysicalSequence(db, 'foo_id_seq', 1000);
       await adapter.ƒ.destroyManager(mgr);
