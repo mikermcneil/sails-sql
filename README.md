@@ -9,10 +9,11 @@ SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports 
 > This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
 
-<a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" width="120px" title="sails-mysql: MySQL adapter for Sails"/></a>
-<a target="_blank" href="https://www.postgresql.org"><img src="http://sm.pcmag.com/t/pcmag_ru/help/p/postgresql/postgresql-94-funktsii-tekhnologii-vozmozhnosti_3nyj.640.jpg" width="140px" alt="Postgresql Logo" title="sails-postgresql: Postgresql adapter for Sails"/></a>
-<a target="_blank" href="https://www.microsoft.com/en-us/sql-server"><img src="https://dirkstrauss.com/wp-content/uploads/2014/01/script-table-data.jpg" width="120px" alt="Microsoft SQL Logo" title="sails-Microsoft-SQL: Microsoft-SQL-Server adapter for Sails"/></a>
-<a target="_blank" href="https://www.sqlite.org/index.html"><img src="https://www.sqlite.org/images/sqlite370_banner.gif" width="120px" alt="SQL Lite" title="SQL Lite: SQL Lite adapter for Sails"/></a>
+<a target="_blank" href="http://www.mysql.com"><img src="http://www.mysql.com/common/logos/powered-by-mysql-125x64.png" alt="Powered by MySQL" width="120px" title="MySQL adapter for Node.js/Sails"/></a>
+<a target="_blank" href="https://www.postgresql.org"><img src="http://sm.pcmag.com/t/pcmag_ru/help/p/postgresql/postgresql-94-funktsii-tekhnologii-vozmozhnosti_3nyj.640.jpg" width="140px" alt="PostgreSQL logo" title="Postgresql adapter for Node.js/Sails"/></a>
+<a target="_blank" href="https://www.microsoft.com/en-us/sql-server"><img src="https://dirkstrauss.com/wp-content/uploads/2014/01/script-table-data.jpg" width="120px" alt="Microsoft SQL Server logo" title="MSSQL: Microsoft SQL Server (MSSQL) adapter for Node.js/Sails"/></a>
+<a target="_blank" href="https://www.sqlite.org/index.html"><img src="https://www.sqlite.org/images/sqlite370_banner.gif" width="120px" alt="SQLite" title="SQLite: SQLite adapter for Node.js/Sails"/></a>
+<a target="_blank" href="https://www.oracle.com/database/index.html"><img src="https://user-images.githubusercontent.com/618009/40745346-d9221d68-641c-11e8-8bf9-3ccded0d24c0.png" width="120px" alt="Oracle" title="Oracle adapter for Node.js/Sails"/></a>
 
 
 
