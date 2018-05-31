@@ -85,7 +85,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
-          the_beep: 'asdf_'+Date.now()+'_asdf'//eslint-disable-line camelcase
+          the_beep: Math.round((Date.now()+(100*Math.random()))/100000)//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
       await adapter.ƒ.destroyManager(mgr);
