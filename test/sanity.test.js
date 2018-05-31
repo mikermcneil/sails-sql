@@ -4,7 +4,9 @@ var adapter = require('../');
 var DRY_ORM = {
   models: {
     foo: {
+      identity: 'foo',
       tableName: 'the_foo',
+      primaryKey: 'id',
       attributes: {
         id: {
           columnName: 'the_id',
@@ -78,20 +80,75 @@ describe('sanity', ()=>{
       await adapter.ƒ.setPhysicalSequence(db, 'the_foo_id_seq', 1000);
       await adapter.ƒ.destroyManager(mgr);
     });
-    it('should support inserting a record', async()=>{
+    it('should support inserting a record (+"fetch")', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      await adapter.ƒ.createRecord({
+      var firstResult = await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
         newRecord: {
-          the_beep: Math.round((Date.now()+(100*Math.random()))/100000)//eslint-disable-line camelcase
+          the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
+      assert(!firstResult);
+      var secondBeep = Date.now()+Math.random();
+      var secondResult = await adapter.ƒ.createRecord({
+        method: 'create',
+        using: 'the_foo',
+        newRecord: {
+          the_beep: secondBeep//eslint-disable-line camelcase
+        },
+        meta: { fetch: true }
+      }, db, DRY_ORM);
+      assert(secondResult);
+      assert.equal(secondResult.the_beep, secondBeep);
       await adapter.ƒ.destroyManager(mgr);
     });
-    it.skip('should support batch inserting many records', async()=>{
-      // TODO
+    it('should support batch inserting many records (+"fetch")', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      var firstResult = await adapter.ƒ.createEachRecord({
+        method: 'createEach',
+        using: 'the_foo',
+        newRecords: [
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          }
+        ],
+      }, db, DRY_ORM);
+      assert(!firstResult);
+      var eighthBeep = Date.now()+Math.random();
+      var secondResult = await adapter.ƒ.createEachRecord({
+        method: 'createEach',
+        using: 'the_foo',
+        newRecords: [
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_beep: eighthBeep//eslint-disable-line camelcase
+          },
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          }
+        ],
+        meta: { fetch: true }
+      }, db, DRY_ORM);
+      assert(secondResult);
+      assert.equal(secondResult[1].the_beep, eighthBeep);
+      await adapter.ƒ.destroyManager(mgr);
     });
   }//∞
 });//∂
