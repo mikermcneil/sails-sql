@@ -1,6 +1,28 @@
 var assert = require('assert');
 var adapter = require('../');
 
+var DRY_ORM = {
+  models: {
+    foo: {
+      tableName: 'the_foo',
+      attributes: {
+        id: {
+          columnName: 'the_id',
+          autoMigrations: { columnType: 'DOESNT_MATTER', unique: true, autoIncrement: true },
+        },
+        beep: {
+          columnName: 'the_beep',
+          required: true,
+          autoMigrations: { columnName: 'beep', columnType: '_number', unique: true },
+        },
+        boop: {
+          columnName: 'the_boop',
+          autoMigrations: { columnName: 'boop', columnType: '_string' }
+        }
+      }//</.attributes>
+    }//</.foo>
+  }//</.models>
+};//</DRY_ORM>
 
 describe('sanity', ()=>{
   var dbTestUrls = [
@@ -47,14 +69,29 @@ describe('sanity', ()=>{
     it('should support auto-migrations', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      await adapter.ƒ.dropPhysicalModel(db, 'foo');
-      await adapter.ƒ.definePhysicalModel(db, 'foo', [
-        { columnName: 'id', columnType: 'DOESNT_MATTER', unique: true, autoIncrement: true },
-        { columnName: 'beep', columnType: '_number', unique: true },
-        { columnName: 'boop', columnType: '_string' },
+      await adapter.ƒ.dropPhysicalModel(db, 'the_foo');
+      await adapter.ƒ.definePhysicalModel(db, 'the_foo', [
+        { columnName: 'the_id', columnType: 'DOESNT_MATTER', unique: true, autoIncrement: true },
+        { columnName: 'the_beep', columnType: '_number', unique: true },
+        { columnName: 'the_boop', columnType: '_string' },
       ]);
-      await adapter.ƒ.setPhysicalSequence(db, 'foo_id_seq', 1000);
+      await adapter.ƒ.setPhysicalSequence(db, 'the_foo_id_seq', 1000);
       await adapter.ƒ.destroyManager(mgr);
+    });
+    it('should support inserting a record', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.createRecord({
+        method: 'create',
+        using: 'the_foo',
+        newRecord: {
+          the_beep: 'asdf_'+Date.now()+'_asdf'//eslint-disable-line camelcase
+        }
+      }, db, DRY_ORM);
+      await adapter.ƒ.destroyManager(mgr);
+    });
+    it.skip('should support batch inserting many records', async()=>{
+      // TODO
     });
   }//∞
 });//∂
