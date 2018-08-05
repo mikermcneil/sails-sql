@@ -54,6 +54,6 @@
   "devDependencies": {
     "benchmark": "2.1.2",
     "eslint": "4.19.1",
-    "mocha": "3.0.2"
+    "mocha": "5.2.0"
   }
 }
