@@ -150,5 +150,32 @@ describe('sanity', ()=>{
       assert.equal(secondResult[1].the_beep, eighthBeep);
       await adapter.ƒ.destroyManager(mgr);
     });
+    it('should support doing a simple count', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      var total = await adapter.ƒ.countRecords({
+        method: 'count',
+        using: 'the_foo',
+        where: {}
+      }, db, DRY_ORM);
+      assert(total);
+      assert(typeof total === 'number');
+      await adapter.ƒ.createRecord({
+        method: 'create',
+        using: 'the_foo',
+        newRecord: {
+          the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+        }
+      }, db, DRY_ORM);
+      var newTotal = await adapter.ƒ.countRecords({
+        method: 'count',
+        using: 'the_foo',
+        where: {}
+      }, db, DRY_ORM);
+      assert(newTotal);
+      assert(typeof newTotal === 'number');
+      assert.equal(newTotal, total + 1);
+      await adapter.ƒ.destroyManager(mgr);
+    });
   }//∞
 });//∂
