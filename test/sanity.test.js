@@ -220,7 +220,7 @@ describe('sanity', ()=>{
       assert.equal(records.length, numRecords);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
-    it('should support a subset of records using limit and skip', async()=>{
+    it('should support finding a subset of records using limit and skip', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var someRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [{the_id: 'DESC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
@@ -230,6 +230,22 @@ describe('sanity', ()=>{
       var someMoreRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: numRecords-2, sort: [{the_id: 'ASC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(someMoreRecords));
       assert.equal(someMoreRecords.length, 2);
+      await adapter.ƒ.destroyManager(mgr);
+    });//</it>
+    it('should support updating all records', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.updateRecords({ method: 'update', using: 'the_foo', valuesToSet: { the_boop: 'hello world!' }, where: {} }, db, DRY_ORM);//eslint-disable-line camelcase
+      var allRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [] }, db, DRY_ORM);
+      assert(allRecords.every((record)=>record['the_foo'] === 'hello world!'));
+      await adapter.ƒ.destroyManager(mgr);
+    });//</it>
+    it('should support destroying all records', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      await adapter.ƒ.destroyRecords({ method: 'destroy', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      assert.equal(numRecords, 0);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
   }//∞
