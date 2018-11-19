@@ -153,7 +153,7 @@ describe('sanity', ()=>{
     it('should support running two count queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var total = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var total = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof total === 'number');
       await adapter.ƒ.createRecord({
         method: 'create',
@@ -162,7 +162,7 @@ describe('sanity', ()=>{
           the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
-      var newTotal = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var newTotal = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof newTotal === 'number');
       assert.equal(newTotal, total + 1);
       await adapter.ƒ.destroyManager(mgr);
@@ -170,7 +170,7 @@ describe('sanity', ()=>{
     it('should support running two sum queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var sumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', where: {} }, db, DRY_ORM);
+      var sumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof sumTotal === 'number');
       var amountToAdd = Date.now()+Math.random();
       await adapter.ƒ.createRecord({
@@ -180,7 +180,7 @@ describe('sanity', ()=>{
           the_beep: amountToAdd//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
-      var newSumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', where: {} }, db, DRY_ORM);
+      var newSumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof newSumTotal === 'number');
       assert(newSumTotal === sumTotal + amountToAdd);
       await adapter.ƒ.destroyManager(mgr);
@@ -188,9 +188,9 @@ describe('sanity', ()=>{
     it('should support running two avg queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var firstAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', where: {} }, db, DRY_ORM);
+      var firstAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof firstAvg === 'number');
-      var originalNumRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var originalNumRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       var valInNewRecord = Date.now()+Math.random();
       await adapter.ƒ.createRecord({
         method: 'create',
@@ -199,7 +199,7 @@ describe('sanity', ()=>{
           the_beep: valInNewRecord//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
-      var secondAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', where: {} }, db, DRY_ORM);
+      var secondAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof secondAvg === 'number');
       var expectedDisplacement = (firstAvg-valInNewRecord)/(originalNumRecords+1);
       var expectedSecondAvg = firstAvg+expectedDisplacement;
@@ -211,11 +211,11 @@ describe('sanity', ()=>{
       // see https://github.com/mikermcneil/sails-sql/blob/23393cffc88e2ba357d61d8cc8341a80a00dc497/test/sanity.test.js#L209-L229
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
-    it('should support finding all records and sorting them', async()=>{
+    it('should support finding all records and sorting them', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
-      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert(Array.isArray(records));
       assert.equal(records.length, numRecords);
       await adapter.ƒ.destroyManager(mgr);
@@ -223,11 +223,11 @@ describe('sanity', ()=>{
     it('should support finding a subset of records using limit and skip', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var someRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [{the_id: 'DESC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
+      var someRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: 3, skip: 1, sort: [{the_id: 'DESC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(someRecords));
       assert.equal(someRecords.length, 3);
-      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
-      var someMoreRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: numRecords-2, sort: [{the_id: 'ASC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
+      var someMoreRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: 3, skip: numRecords-2, sort: [{the_id: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(someMoreRecords));
       assert.equal(someMoreRecords.length, 2);
       await adapter.ƒ.destroyManager(mgr);
@@ -235,16 +235,16 @@ describe('sanity', ()=>{
     it('should support updating all records', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      await adapter.ƒ.updateRecords({ method: 'update', using: 'the_foo', valuesToSet: { the_boop: 'hello world!' }, where: {} }, db, DRY_ORM);//eslint-disable-line camelcase
-      var allRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [] }, db, DRY_ORM);
+      await adapter.ƒ.updateRecords({ method: 'update', using: 'the_foo', valuesToSet: { the_boop: 'hello world!' }, criteria: { where: {} } }, db, DRY_ORM);//eslint-disable-line camelcase
+      var allRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: 3, skip: 1, sort: [] } }, db, DRY_ORM);
       assert(allRecords.every((record)=>record['the_boop'] === 'hello world!'));
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
     it('should support destroying all records', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      await adapter.ƒ.destroyRecords({ method: 'destroy', using: 'the_foo', where: {} }, db, DRY_ORM);
-      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      await adapter.ƒ.destroyRecords({ method: 'destroy', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert.equal(numRecords, 0);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
