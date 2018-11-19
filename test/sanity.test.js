@@ -211,10 +211,10 @@ describe('sanity', ()=>{
       // see https://github.com/mikermcneil/sails-sql/blob/23393cffc88e2ba357d61d8cc8341a80a00dc497/test/sanity.test.js#L209-L229
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
-    it('should support finding records', async()=>{
+    it('should support finding all records and sorting them', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [] }, db, DRY_ORM);
+      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
       var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
       assert(Array.isArray(records));
       assert.equal(records.length, numRecords);
