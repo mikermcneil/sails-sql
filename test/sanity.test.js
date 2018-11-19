@@ -220,5 +220,17 @@ describe('sanity', ()=>{
       assert.equal(records.length, numRecords);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
+    it('should support a subset of records using limit and skip', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      var someRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [{the_id: 'DESC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
+      assert(Array.isArray(someRecords));
+      assert.equal(someRecords.length, 3);
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      var someMoreRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: numRecords-2, sort: [{the_id: 'ASC'}] }, db, DRY_ORM);//eslint-disable-line camelcase
+      assert(Array.isArray(someMoreRecords));
+      assert.equal(someMoreRecords.length, 2);
+      await adapter.ƒ.destroyManager(mgr);
+    });//</it>
   }//∞
 });//∂
