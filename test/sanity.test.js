@@ -237,7 +237,7 @@ describe('sanity', ()=>{
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.updateRecords({ method: 'update', using: 'the_foo', valuesToSet: { the_boop: 'hello world!' }, where: {} }, db, DRY_ORM);//eslint-disable-line camelcase
       var allRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: 3, skip: 1, sort: [] }, db, DRY_ORM);
-      assert(allRecords.every((record)=>record['the_foo'] === 'hello world!'));
+      assert(allRecords.every((record)=>record['the_boop'] === 'hello world!'));
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
     it('should support destroying all records', async()=>{
