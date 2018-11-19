@@ -229,5 +229,23 @@ describe('sanity', ()=>{
       // console.log('accuracy % (std deviation divided by absolute value of mean of expected & actual, times 100, subtracted from 100)', accuracy);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
+    it('should support finding records', async()=>{
+      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var db = (await adapter.ƒ.getConnection(mgr)).connection;
+      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [] }, db, DRY_ORM);
+      console.log('records', records);
+      // assert(typeof total === 'number');
+      // await adapter.ƒ.createRecord({
+      //   method: 'create',
+      //   using: 'the_foo',
+      //   newRecord: {
+      //     the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+      //   }
+      // }, db, DRY_ORM);
+      // var newTotal = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      // assert(typeof newTotal === 'number');
+      // assert.equal(newTotal, total + 1);
+      await adapter.ƒ.destroyManager(mgr);
+    });//</it>
   }//∞
 });//∂
