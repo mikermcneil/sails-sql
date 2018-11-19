@@ -233,18 +233,9 @@ describe('sanity', ()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [] }, db, DRY_ORM);
-      console.log('records', records);
-      // assert(typeof total === 'number');
-      // await adapter.ƒ.createRecord({
-      //   method: 'create',
-      //   using: 'the_foo',
-      //   newRecord: {
-      //     the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
-      //   }
-      // }, db, DRY_ORM);
-      // var newTotal = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
-      // assert(typeof newTotal === 'number');
-      // assert.equal(newTotal, total + 1);
+      var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', where: {} }, db, DRY_ORM);
+      assert(Array.isArray(records));
+      assert.equal(records.length, numRecords);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
   }//∞
