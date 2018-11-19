@@ -201,10 +201,32 @@ describe('sanity', ()=>{
       }, db, DRY_ORM);
       var secondAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', where: {} }, db, DRY_ORM);
       assert(typeof secondAvg === 'number');
-      var expectedDelta = valInNewRecord/(originalNumRecords+1);
-      assert.equal(secondAvg, valInNewRecord > firstAvg  ? (firstAvg+expectedDelta)  : (firstAvg-expectedDelta));
+      var expectedDisplacement = (firstAvg-valInNewRecord)/(originalNumRecords+1);
+      var expectedSecondAvg = firstAvg+expectedDisplacement;
+      var stdDeviation = Math.sqrt((Math.pow(expectedSecondAvg - ((secondAvg + expectedSecondAvg) / 2), 2) + Math.pow(secondAvg - ((secondAvg + expectedSecondAvg) / 2), 2))/2);
+      var accuracy = 100 - ((stdDeviation / ((secondAvg + expectedSecondAvg) / 2)) * 100);
+      assert(accuracy > 99);
       // ^^e.g. consider a case where original avg is 2, and there are 3 records (with values 1, 2, and 3)
       // If a new record w/ value 1 is added, then the new average becomes 1.75 (i.e. subtract 1/4)
+      //
+      // However, since we're dealing with floating point math, also note that we give ourselves a tiny bit
+      // of room for variation above.  For example:
+      // > orig avg: 1542617220682.9153
+      // > orig count: 12
+      // > val in new record: 1542617220703.7568
+      // > expected displacement = (1542617220682.9153-1542617220703.7568)/(12+1) = -1.6031963641826923
+      // > expected new avg: 1542617220681.312
+      // > ACTUAL new avg:   1542617220684.5186   (not exact, but within acceptable standard deviation, so we'll say it's good)
+      //
+      // Here's how the computation works:
+      // console.log('expectedSecondAvg', expectedSecondAvg);
+      // console.log('actual secondAvg', secondAvg);
+      // console.log('mean of expected & actual',(secondAvg + expectedSecondAvg) / 2);
+      // console.log('differences',expectedSecondAvg-((secondAvg + expectedSecondAvg) / 2), secondAvg-((secondAvg + expectedSecondAvg) / 2));
+      // console.log('squared differences', Math.pow(expectedSecondAvg-((secondAvg + expectedSecondAvg) / 2), 2), Math.pow(secondAvg-((secondAvg + expectedSecondAvg) / 2), 2) );
+      // console.log('mean of squared differences', (Math.pow(expectedSecondAvg-((secondAvg + expectedSecondAvg) / 2), 2) + Math.pow(secondAvg-((secondAvg + expectedSecondAvg) / 2), 2)) / 2 );
+      // console.log('std deviation (aka sqrt of mean of squared differences)', Math.sqrt((Math.pow(expectedSecondAvg-((secondAvg + expectedSecondAvg) / 2), 2) + Math.pow(secondAvg-((secondAvg + expectedSecondAvg) / 2), 2)) / 2) );
+      // console.log('accuracy % (std deviation divided by absolute value of mean of expected & actual, times 100, subtracted from 100)', accuracy);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
   }//∞
