@@ -235,14 +235,22 @@ describe('sanity', ()=>{
     it('should support finding a subset of records using where', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
-      await adapter.ƒ.createRecord({
-        method: 'create',
+      await adapter.ƒ.createEachRecord({
+        method: 'createEach',
         using: 'the_foo',
-        newRecord: {
-          the_beep: 99999999//eslint-disable-line camelcase
-        }
+        newRecords: [
+          {
+            the_beep: 99999999//eslint-disable-line camelcase
+          },
+          {
+            the_beep: 88888888//eslint-disable-line camelcase
+          },
+          {
+            the_beep: 77777777//eslint-disable-line camelcase
+          }
+        ]
       }, db, DRY_ORM);
-      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { the_beep: 99999999 }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
+      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { or: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888} ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(records));
       assert.equal(records.length, 1);
       await adapter.ƒ.destroyManager(mgr);
