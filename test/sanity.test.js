@@ -271,5 +271,5 @@ describe('sanity', ()=>{
       assert.equal(numRecords, 0);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
-  }//∞
+  }//∞  </ each connection URL >
 });//∂
