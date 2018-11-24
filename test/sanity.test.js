@@ -284,7 +284,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { or: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888}, {the_boop: null} ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(records));
       assert.equal(records.length, 4);
-      var otherRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { and: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888}, {the_boop:{'!=': null}} ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
+      var otherRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { and: [ {the_boop:{'!=': null}}, { or: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888} ] } ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(otherRecords));
       assert.equal(otherRecords.length, 2);
       await adapter.ƒ.destroyManager(mgr);
