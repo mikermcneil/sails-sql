@@ -14,11 +14,13 @@ var DRY_ORM = {
         },
         beep: {
           columnName: 'the_beep',
-          required: true,
+          required: true,// ««« IMPORTANT!  In our tests, we have to make sure and ensure this requiredness ourselves, since we're calling the adapter directly and can't rely on Waterline's help
           autoMigrations: { columnName: 'beep', columnType: '_number', unique: true },
         },
         boop: {
           columnName: 'the_boop',
+          defaultsTo: '',// ««« IMPORTANT!  In our tests, we have to take care of this ourselves, since we're calling the adapter directly and can't rely on Waterline's help
+          allowNull: true,
           autoMigrations: { columnName: 'boop', columnType: '_string' }
         }
       }//</.attributes>
@@ -26,7 +28,8 @@ var DRY_ORM = {
   }//</.models>
 };//</DRY_ORM>
 
-describe('sanity', ()=>{
+describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
+  this.slow(250);
   var dbTestUrls = [
     'mysql://root@localhost/mppg',
     // 'pg://root@localhost/mppg',
@@ -87,6 +90,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
+          the_boop: '',//eslint-disable-line camelcase
           the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
@@ -96,6 +100,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
+          the_boop: '',//eslint-disable-line camelcase
           the_beep: secondBeep//eslint-disable-line camelcase
         },
         meta: { fetch: true }
@@ -112,15 +117,19 @@ describe('sanity', ()=>{
         using: 'the_foo',
         newRecords: [
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           }
         ],
@@ -132,15 +141,19 @@ describe('sanity', ()=>{
         using: 'the_foo',
         newRecords: [
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: eighthBeep//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           }
         ],
@@ -159,6 +172,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
+          the_boop: '',//eslint-disable-line camelcase
           the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
@@ -177,6 +191,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
+          the_boop: '',//eslint-disable-line camelcase
           the_beep: amountToAdd//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
@@ -196,6 +211,7 @@ describe('sanity', ()=>{
         method: 'create',
         using: 'the_foo',
         newRecord: {
+          the_boop: '',//eslint-disable-line camelcase
           the_beep: valInNewRecord//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
@@ -240,19 +256,34 @@ describe('sanity', ()=>{
         using: 'the_foo',
         newRecords: [
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: 99999999//eslint-disable-line camelcase
           },
           {
+            the_boop: '',//eslint-disable-line camelcase
             the_beep: 88888888//eslint-disable-line camelcase
           },
           {
+            the_boop: null,//eslint-disable-line camelcase
             the_beep: 77777777//eslint-disable-line camelcase
+          },
+          {
+            the_boop: null,//eslint-disable-line camelcase
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_boop: 'asdfg',//eslint-disable-line camelcase
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          },
+          {
+            the_boop: '',//eslint-disable-line camelcase
+            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
           }
         ]
       }, db, DRY_ORM);
-      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { or: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888} ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
+      var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: { or: [ {the_beep: 77777777}, {the_beep: 99999999}, {the_beep: 88888888}, {the_boop: null} ] }, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(records));
-      assert.equal(records.length, 3);
+      assert.equal(records.length, 4);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
     it('should support updating all records', async()=>{
