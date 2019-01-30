@@ -1,6 +1,6 @@
 {
   "name": "sails-sql",
-  "version": "0.0.1-8",
+  "version": "0.0.1-9",
   "description": "Flexible SQL adapter for Sails/Waterline.  Supports MySQL, PostgreSQL, SQL Server (MSSQL), Oracle, & SQLite.",
   "keywords": [
     "adapter",
