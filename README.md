@@ -14,6 +14,17 @@ SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports 
 <a target="_blank" href="https://www.oracle.com/database/index.html"><img src="https://user-images.githubusercontent.com/618009/40745346-d9221d68-641c-11e8-8bf9-3ccded0d24c0.png" width="120px" alt="Oracle" title="Oracle adapter for Node.js/Sails"/></a>
 
 
+## Running the tests
+
+Run the tests with the `SAILS_SQL_TEST_1` environment variable set to the database connection URL of an empty/throwaway database you'd like to use for testing.
+
+If you have more than one empty/throwaway database you'd like to test against, you can include multiple URLs to run the tests back to back:
+
+For example:
+
+```bash
+SAILS_SQL_TEST_1='mssql://root:s3cr3td4nc3rboi@127.0.0.1:8181/somethrowawaydb' SAILS_SQL_TEST_2='mysql://root:s3cr3td4nc3rboi@127.0.0.1:3306/anotherthrowaway' npm test
+```
 
 ## Acknowledgements
 

@@ -31,12 +31,12 @@ var DRY_ORM = {
 describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
   this.slow(250);
   var dbTestUrls = [
-    'mysql://root@localhost/mppg',
-    // 'pg://root@localhost/mppg',
-    // 'mssql://root@localhost/mppg',
-    // 'sqlite3://root@localhost/mppg',
-    // 'oracledb://root@localhost/mppg',
-  ];
+    process.env.SAILS_SQL_TEST_1,// e.g. 'mysql://root@localhost/mppg',
+    process.env.SAILS_SQL_TEST_2,// e.g. 'pg://root@localhost/mppg',
+    process.env.SAILS_SQL_TEST_3,// e.g. 'mssql://root@localhost/mppg',
+    process.env.SAILS_SQL_TEST_4,// e.g. 'sqlite3://root@localhost/mppg',
+    process.env.SAILS_SQL_TEST_5,// e.g. 'oracledb://root@localhost/mppg',
+  ].filter((url) => !!url );
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
