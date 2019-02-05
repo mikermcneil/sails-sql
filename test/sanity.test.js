@@ -37,6 +37,10 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
     process.env.SAILS_SQL_TEST_4,// e.g. 'sqlite3://root@localhost/mppg',
     process.env.SAILS_SQL_TEST_5,// e.g. 'oracledb://root@localhost/mppg',
   ].filter((url) => !!url );
+
+  if (dbTestUrls.length === 0) {
+    throw new Error(`Please specify at least one database to test against.\ne.g.\nSAILS_SQL_TEST_1='mysql://root:p4ssw0rdRc00l@localhost:3306/foo' npm test`);
+  }
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
