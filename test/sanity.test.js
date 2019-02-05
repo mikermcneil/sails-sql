@@ -43,7 +43,9 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
   }
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
-      var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      var mgr = (await adapter.ƒ.createManager(dbUrl, (err)=>{
+        console.warn('*********** *********** *********** warn: onUnexpectedFailure notifier function was triggered:', err);
+      })).manager;
       // console.log('* ** * Got manager:', mgr);
       var firstConnection = (await adapter.ƒ.getConnection(mgr)).connection;
       // console.log('* ** * Got first connection:', firstConnection);
@@ -59,11 +61,13 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var queryFailureErr;
-      await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
+      var result = await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
       .tolerate('queryFailed', (err)=>{
         let report = err.raw;
         queryFailureErr = report.error;
+        throw new Error('wtf');
       });
+      console.log('**',result);
       assert(queryFailureErr);
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
       await adapter.ƒ.destroyManager(mgr);
