@@ -65,9 +65,9 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       .tolerate('queryFailed', (err)=>{
         let report = err.raw;
         queryFailureErr = report.error;
-        throw new Error('wtf');
+        console.log('* got error:', err);
       });
-      console.log('**',result);
+      console.log('**', result);
       assert(queryFailureErr);
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
       await adapter.ƒ.destroyManager(mgr);
