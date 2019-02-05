@@ -44,11 +44,16 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      // console.log('* ** * Got manager:', mgr);
       var firstConnection = (await adapter.ƒ.getConnection(mgr)).connection;
+      // console.log('* ** * Got first connection:', firstConnection);
       await adapter.ƒ.getConnection(mgr);
+      // console.log('* ** * Got another connection:', firstConnection);
       await adapter.ƒ.getConnection(mgr);
       await adapter.ƒ.releaseConnection(firstConnection);
+      // console.log('* ** * Released first connection');
       await adapter.ƒ.destroyManager(mgr);
+      // console.log('* ** * Destroyed manager');
     });//</it>
     it('should support querying', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
