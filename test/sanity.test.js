@@ -61,18 +61,18 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var queryFailureErr;
-      var result = await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
+      var unusedResult = await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
       .tolerate('queryFailed', (err)=>{
         let report = err.raw;
         queryFailureErr = report.error;
-        console.log('* got error:', err);
+        // console.log('* got error:', err);
       });
-      console.log('**', result);
+      // console.log('**', unusedResult);
       assert(queryFailureErr);
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
       await adapter.ƒ.destroyManager(mgr);
     });//</it>
-    it('should support transactions', async()=>{
+    it.skip('should support transactions', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       var db1 = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.beginTransaction(db1);
