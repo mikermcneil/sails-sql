@@ -1,4 +1,5 @@
 var assert = require('assert');
+var _ = require('@sailshq/lodash');
 var adapter = require('../');
 
 var DRY_ORM = {
@@ -28,6 +29,7 @@ var DRY_ORM = {
   }//</.models>
 };//</DRY_ORM>
 
+
 describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
   this.slow(250);
   var dbTestUrls = [
@@ -37,15 +39,25 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
     process.env.SAILS_SQL_TEST_4,// e.g. 'sqlite3://root@localhost/mppg',
     process.env.SAILS_SQL_TEST_5,// e.g. 'oracledb://root@localhost/mppg',
   ].filter((url) => !!url );
-
   if (dbTestUrls.length === 0) {
     throw new Error(`Please specify at least one database to test against.\ne.g.\nSAILS_SQL_TEST_1='mysql://root:p4ssw0rdRc00l@localhost:3306/foo' npm test`);
   }
+
+  // Keep track of managers to help the tests more-gracefully tidy themselves up.
+  var mgrs = [];
+
+  after(async()=>{
+    for (let mgr of mgrs) {
+      await adapter.ƒ.destroyManager(mgr);
+    }//∞
+  });//œ
+
   for (let dbUrl of dbTestUrls) {
     it('should support creating a manager, grabbing connections, releasing one, and then destroying the manager', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl, (err)=>{
         console.warn('*********** *********** *********** warn: onUnexpectedFailure notifier function was triggered:', err);
       })).manager;
+      mgrs.push(mgr);
       // console.log('* ** * Got manager:', mgr);
       var firstConnection = (await adapter.ƒ.getConnection(mgr)).connection;
       // console.log('* ** * Got first connection:', firstConnection);
@@ -55,10 +67,12 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       await adapter.ƒ.releaseConnection(firstConnection);
       // console.log('* ** * Released first connection');
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
       // console.log('* ** * Destroyed manager');
     });//</it>
     it('should support querying', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var queryFailureErr;
       var unusedResult = await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
@@ -71,9 +85,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(queryFailureErr);
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it.skip('should support transactions', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db1 = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.beginTransaction(db1);
       await adapter.ƒ.sendNativeQuery(db1, 'SELECT * FROM notarealtable').tolerate('queryFailed');
@@ -83,9 +99,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       await adapter.ƒ.sendNativeQuery(db2, 'SELECT * FROM notarealtable').tolerate('queryFailed');
       await adapter.ƒ.rollbackTransaction(db2);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support auto-migrations', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.dropPhysicalModel(db, 'the_foo');
       await adapter.ƒ.definePhysicalModel(db, 'the_foo', [
@@ -95,9 +113,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       ]);
       await adapter.ƒ.setPhysicalSequence(db, 'the_foo_id_seq', 1000);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support inserting a record (+"fetch")', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var firstResult = await adapter.ƒ.createRecord({
         method: 'create',
@@ -121,9 +141,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(secondResult);
       assert.equal(secondResult.the_beep, secondBeep);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support batch inserting many records (+"fetch")', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var firstResult = await adapter.ƒ.createEachRecord({
         method: 'createEach',
@@ -175,9 +197,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(secondResult);
       assert.equal(secondResult[1].the_beep, eighthBeep);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support running two count queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var total = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof total === 'number');
@@ -193,9 +217,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(typeof newTotal === 'number');
       assert.equal(newTotal, total + 1);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support running two sum queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var sumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof sumTotal === 'number');
@@ -212,9 +238,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(typeof newSumTotal === 'number');
       assert(newSumTotal === sumTotal + amountToAdd);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support running two avg queries, with consistent results', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var firstAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof firstAvg === 'number');
@@ -239,18 +267,22 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       // that the expected second average is the same as the first (hint: floating point math),
       // see https://github.com/mikermcneil/sails-sql/blob/23393cffc88e2ba357d61d8cc8341a80a00dc497/test/sanity.test.js#L209-L229
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support finding all records and sorting them', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var records = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: Number.MAX_SAFE_INTEGER, skip: 0, sort: [{the_beep: 'ASC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert(Array.isArray(records));
       assert.equal(records.length, numRecords);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support finding a subset of records using limit and skip', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var someRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: 3, skip: 1, sort: [{the_id: 'DESC'}] } }, db, DRY_ORM);//eslint-disable-line camelcase
       assert(Array.isArray(someRecords));
@@ -260,9 +292,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(Array.isArray(someMoreRecords));
       assert.equal(someMoreRecords.length, 2);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support finding a subset of records using where', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.createEachRecord({
         method: 'createEach',
@@ -301,22 +335,27 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       assert(Array.isArray(otherRecords));
       assert.equal(otherRecords.length, 2);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support updating all records', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.updateRecords({ method: 'update', using: 'the_foo', valuesToSet: { the_boop: 'hello world!' }, criteria: { where: {} } }, db, DRY_ORM);//eslint-disable-line camelcase
       var allRecords = await adapter.ƒ.findRecords({ method: 'find', using: 'the_foo', criteria: { where: {}, select: ['*'], limit: 3, skip: 1, sort: [] } }, db, DRY_ORM);
       assert(allRecords.every((record)=>record['the_boop'] === 'hello world!'));
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
     it('should support destroying all records', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
+      mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       await adapter.ƒ.destroyRecords({ method: 'destroy', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       var numRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
       assert.equal(numRecords, 0);
       await adapter.ƒ.destroyManager(mgr);
+      mgrs = _.difference(mgrs, [mgr]);
     });//</it>
   }//∞  </ each connection URL >
 });//∂
