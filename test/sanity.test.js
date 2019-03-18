@@ -70,20 +70,21 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       mgrs = _.difference(mgrs, [mgr]);
       // console.log('* ** * Destroyed manager');
     });//</it>
-    it('should support querying', async()=>{
+    it('should support querying, and relevant errors should have the "noSuchPhysicalModel" footprint', async()=>{
       var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
       mgrs.push(mgr);
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var queryFailureErr;
       var unusedResult = await adapter.ƒ.sendNativeQuery(db, 'SELECT * FROM notarealtable')
       .tolerate('queryFailed', (err)=>{
+        // console.log('* got error:', err);
         let report = err.raw;
         queryFailureErr = report.error;
-        // console.log('* got error:', err);
       });
       // console.log('**', unusedResult);
       assert(queryFailureErr);
       assert.equal('noSuchPhysicalModel', (await adapter.ƒ.parseNativeQueryError(queryFailureErr)).footprint.identity);
+      // ^Note that this tests adherence to the "noSuchPhysicalModel" footprint
       await adapter.ƒ.destroyManager(mgr);
       mgrs = _.difference(mgrs, [mgr]);
     });//</it>
