@@ -128,7 +128,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         }
       }, db, DRY_ORM);
       assert(!firstResult);
-      var secondBeep = Date.now()+Math.random();
+      var secondBeep = (Date.now()+Math.random())/100;
       var secondResult = await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
