@@ -125,11 +125,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         using: 'the_foo',
         newRecord: {
           the_boop: '',//eslint-disable-line camelcase
-          the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
       assert(!firstResult);
-      var secondBeep = (Date.now()+Math.random())/100;
+      var secondBeep = (Date.now()+Math.random());
       var secondResult = await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
@@ -154,31 +154,31 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         newRecords: [
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           }
         ],
       }, db, DRY_ORM);
       assert(!firstResult);
-      var eighthBeep = Date.now()+Math.random();
+      var eighthBeep = (Date.now()+Math.random());
       var secondResult = await adapter.ƒ.createEachRecord({
         method: 'createEach',
         using: 'the_foo',
         newRecords: [
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
@@ -186,11 +186,11 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           }
         ],
         meta: { fetch: true }
@@ -211,7 +211,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         using: 'the_foo',
         newRecord: {
           the_boop: '',//eslint-disable-line camelcase
-          the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+          the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
         }
       }, db, DRY_ORM);
       var newTotal = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
@@ -226,7 +226,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       var db = (await adapter.ƒ.getConnection(mgr)).connection;
       var sumTotal = await adapter.ƒ.sumRecords({ method: 'sum', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof sumTotal === 'number');
-      var amountToAdd = Date.now()+Math.random();
+      var amountToAdd = (Date.now()+Math.random());
       await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
@@ -248,7 +248,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
       var firstAvg = await adapter.ƒ.avgRecords({ method: 'avg', using: 'the_foo', numericAttrName: 'the_beep', criteria: { where: {} } }, db, DRY_ORM);
       assert(typeof firstAvg === 'number');
       var originalNumRecords = await adapter.ƒ.countRecords({ method: 'count', using: 'the_foo', criteria: { where: {} } }, db, DRY_ORM);
-      var valInNewRecord = Date.now()+Math.random();
+      var valInNewRecord = (Date.now()+Math.random());
       await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
@@ -317,15 +317,15 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
           },
           {
             the_boop: null,//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: 'asdfg',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           },
           {
             the_boop: '',//eslint-disable-line camelcase
-            the_beep: Date.now()+Math.random()//eslint-disable-line camelcase
+            the_beep: (Date.now()+Math.random())//eslint-disable-line camelcase
           }
         ]
       }, db, DRY_ORM);
