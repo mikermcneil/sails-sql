@@ -196,7 +196,6 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         meta: { fetch: true }
       }, db, DRY_ORM);
       assert(secondResult);
-      console.log('secondResult:', secondResult);
       assert.equal(secondResult[1].the_beep, eighthBeep);
       await adapter.ƒ.destroyManager(mgr);
       mgrs = _.difference(mgrs, [mgr]);
