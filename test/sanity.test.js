@@ -129,7 +129,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         }
       }, db, DRY_ORM);
       assert(!firstResult);
-      var secondBeep = (Date.now()+Math.random());
+      var secondBeep = (Date.now()+Math.random());// TODO: Instead of a random number, use one that we know is problematic:  "1553039660680.3054"
       var secondResult = await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
@@ -140,7 +140,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         meta: { fetch: true }
       }, db, DRY_ORM);
       assert(secondResult);
-      assert.equal(secondResult.the_beep, secondBeep);
+      assert.equal(secondResult.the_beep, secondBeep, `Expected value in result from database to match the value provided when creating.  But secondResult.the_beep is ${secondResult.the_beep}  whereas the value provided when creating was ${secondBeep}`);
       await adapter.ƒ.destroyManager(mgr);
       mgrs = _.difference(mgrs, [mgr]);
     });//</it>
@@ -196,7 +196,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         meta: { fetch: true }
       }, db, DRY_ORM);
       assert(secondResult);
-      assert.equal(secondResult[1].the_beep, eighthBeep);
+      assert.equal(secondResult[1].the_beep, eighthBeep, `Expected value in result from database to match the value provided when creating.  But secondResult[1].the_beep is ${secondResult[1].the_beep}  whereas the value provided when creating was ${eighthBeep}`);
       await adapter.ƒ.destroyManager(mgr);
       mgrs = _.difference(mgrs, [mgr]);
     });//</it>
