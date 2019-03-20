@@ -129,7 +129,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         }
       }, db, DRY_ORM);
       assert(!firstResult);
-      var secondBeep = (Date.now()+Math.random());// TODO: Instead of a random number, use one that we know is problematic:  "1553039660680.3054"
+      var secondBeep = 1553039660680.3054;//«Note that, instead of a random number, we use one that we know is problematic (when it comes to the decimal column type in MSSQL, anyway)
       var secondResult = await adapter.ƒ.createRecord({
         method: 'create',
         using: 'the_foo',
