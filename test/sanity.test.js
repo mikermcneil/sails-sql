@@ -89,7 +89,7 @@ describe('sanity', function(){//eslint-disable-line prefer-arrow-callback
         await adapter.ƒ.destroyManager(mgr);
         mgrs = _.difference(mgrs, [mgr]);
       });//</it>
-      it.skip('should support transactions', async()=>{
+      ((dbUrl.match(/^([^:/]+)\:/)[1] === 'mssql') ? it.skip : it)('should support transactions', async()=>{
         var mgr = (await adapter.ƒ.createManager(dbUrl)).manager;
         mgrs.push(mgr);
         var db1 = (await adapter.ƒ.getConnection(mgr)).connection;
