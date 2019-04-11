@@ -2,7 +2,7 @@
 
 ## THIS IS A WORK IN PROGRESS UNDER ACTIVE DEVELOPMENT - DO NOT USE IN PRODUCTION  (targeting 2019 for the first stable release w/ 3 out of 5 dialects)
 
-SQL adapter for Node.js/Sails and [Waterline](http://waterlinejs.org). Supports MySQL, PostgreSQL, and Microsoft SQL Server (MSSQL) databases.
+SQL adapter for [Node.js/Sails](https://sailsjs.com) and [Waterline](http://waterlinejs.org). Supports MySQL, ~~PostgreSQL~~ _(PostgreSQL is under construction)_, and Microsoft SQL Server (MSSQL) databases.
 
 > This adapter is compatible with Node ≥8 and up.  For SQL adapters compatible with older versions of Node.js, see legacy adapters [sails-mysql](https://npmjs.com/package/sails-mysql) and [sails-postgresql](https://npmjs.com/package/sails-postgresql).
 
@@ -20,7 +20,7 @@ If you have more than one empty/throwaway database you'd like to test against, y
 For example:
 
 ```bash
-SAILS_SQL_TEST_1='mssql://root:s3cr3td4nc3rboi@127.0.0.1:8181/somethrowawaydb' SAILS_SQL_TEST_2='mysql://root:s3cr3td4nc3rboi@127.0.0.1:3306/anotherthrowaway' npm test
+SAILS_SQL_TEST_1='mssql://root:s3cr3td4nc3@127.0.0.1:8181/somethrowawaydb' SAILS_SQL_TEST_2='mysql://root:s3cr3td4nc3@127.0.0.1:3306/anotherthrowaway' npm test
 ```
 
 ## Acknowledgements
